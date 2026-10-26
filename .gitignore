@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+node_modules/
+.DS_Store
+data/sources/.off-partial.json
+*.tmp
+
+# рабочие заметки, в репозиторий не идут
+PROJECT_CONTEXT.md
+TASKS.md
+docs/HR_MESSAGE.md

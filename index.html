@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: https://images.openfoodfacts.org https://commons.wikimedia.org https://upload.wikimedia.org; font-src 'self'; connect-src 'self' https://world.openfoodfacts.org; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Закром - закупки для общепита и производств</title>
+<meta name="description" content="Закупки для сетей общепита и пищевых производств: каталог, поставщики, заказы, склад, техкарты и расходы. Песочница на открытых данных.">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0a0a0b">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/app.css">
+<script type="module" src="js/app/theme-early.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">К содержанию</a>
+
+<header class="topbar" id="topbar">
+  <div class="topbar-row" id="topbar-row">
+    <a class="brand" href="#/" aria-label="Закром, на главную">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path fill="#0b0b0c" d="M8 8.5h16v3.4H8zM13 14.3h11v3.4H13zM8 20.1h16v3.4H8z"/></svg></span>
+      <span class="brand-word">Закром</span>
+    </a>
+  </div>
+  <nav class="nav" id="nav" aria-label="Разделы"></nav>
+</header>
+
+<main class="page" id="main" tabindex="-1">
+  <div class="stack">
+    <div class="skeleton boot-skel"></div>
+  </div>
+</main>
+
+<div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
+<script type="module" src="js/app/main.js"></script>
+</body>
+</html>

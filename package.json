@@ -1,0 +1,17 @@
+{
+  "name": "zakrom",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Закром: закупки для сетей общепита и пищевых производств. Статический кабинет-песочница на открытых данных",
+  "type": "module",
+  "scripts": {
+    "start": "python3 -m http.server 8768 --bind 127.0.0.1",
+    "data:fetch": "python3 tools/fetch_sources.py",
+    "data": "node tools/build-catalog.mjs",
+    "data:check": "node tools/build-catalog.mjs --check",
+    "lint": "node tools/check-imports.mjs js tools && node --check js/app/main.js",
+    "test:js": "node --test tests/js/*.test.mjs",
+    "test:py": "python3 -m unittest discover -s tests/python",
+    "test": "npm run lint && npm run test:js && npm run test:py"
+  }
+}
