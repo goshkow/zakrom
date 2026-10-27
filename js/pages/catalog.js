@@ -107,16 +107,30 @@ export function render(route) {
     ? el('div', { class: 'row-wrap' }, chip('Все виды', !kind, () => setQuery({ kind: null })), kindsInGroup.map(([k, spec]) => chip(spec.label, kind === k, () => setQuery({ kind: kind === k ? null : k }))))
     : kind ? el('div', { class: 'row-wrap' }, chip(`${KINDS[kind].label}`, true, () => setQuery({ kind: null })), el('span', { class: 'faint', text: 'нажмите, чтобы сбросить' })) : null;
 
+  // карточки дорисовываем порциями: 240 карточек с картинками сразу Safari на айфоне не тянет и перезагружает вкладку
+  let shown = Math.min(priced.length, PAGE);
+  const counter = el('div', { class: 'faint', style: { fontSize: '13px' } });
+  const paintCounter = () => { counter.textContent = `Показано ${num(shown)} из ${num(priced.length)}`; };
+  paintCounter();
+  const more = button('Показать ещё', { variant: 'ghost', onClick: () => {
+    const next = Math.min(priced.length, shown + PAGE);
+    grid.append(...priced.slice(shown, next).map((item, i) => productCard(item, assigned.has(item.p.id), shown + i)));
+    shown = next;
+    paintCounter();
+    if (shown >= priced.length) more.remove();
+  } });
   const grid = priced.length
-    ? el('div', { class: `catalog-grid${animate() ? ' anim' : ''}` }, priced.slice(0, 240).map((item, i) => productCard(item, assigned.has(item.p.id), i)))
+    ? el('div', { class: `catalog-grid${animate() ? ' anim' : ''}` }, priced.slice(0, shown).map((item, i) => productCard(item, assigned.has(item.p.id), i)))
     : empty('Ничего не нашлось', 'Проверьте написание или поищите по штрихкоду: если товара нет в каталоге, его можно запросить у поставщиков через тендер.', button('Запустить тендер', { iconName: 'gavel', onClick: () => go(link('rfq', null, { new: 1, item: q })) }));
 
 
   return el('div', {},
     head,
-    el('div', { class: 'layout-side' }, side, el('div', { class: 'stack' }, toolbar, kindChips, el('div', { class: 'faint', style: { fontSize: '13px' }, text: `Показано ${num(Math.min(priced.length, 240))} из ${num(priced.length)}` }), grid)),
+    el('div', { class: 'layout-side' }, side, el('div', { class: 'stack' }, toolbar, kindChips, counter, grid, priced.length > shown ? more : null)),
   );
 }
+
+const PAGE = 48;
 
 function productCard({ p, best, unit, offers }, used, index = 0) {
   const cartPacks = state.user.cart.filter((c) => c.productId === p.id).reduce((sum, c) => sum + c.packs, 0);
